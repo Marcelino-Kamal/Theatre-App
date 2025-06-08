@@ -1,0 +1,30 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Theatre_App.Models
+{
+    public class Users
+    {
+        [Key]
+        public Guid Id { get; set; } 
+
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        public int PhoneNumber { get; set; } = 0000;
+
+        [Required]
+        [MinLength(6,ErrorMessage = "Password must be longer than 6 Characters")]
+        public string password {  get; set; }
+
+        public int RoleID { get; set; } = 1;
+
+        [ForeignKey("RoleID")]
+        public Roles Role { get; set; }
+
+
+
+    }
+}
