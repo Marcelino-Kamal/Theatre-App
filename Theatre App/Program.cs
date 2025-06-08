@@ -1,7 +1,21 @@
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+using Theatre_App.Data;
+
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+var connectionString = Env.GetString("DB_CONNECTION");
+
+// Configure the database connection
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
 
 var app = builder.Build();
 
