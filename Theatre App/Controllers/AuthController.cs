@@ -8,5 +8,10 @@ namespace Theatre_App.Controllers
         {
             return View();
         }
+        public IActionResult login() {
+
+
+            return Ok("Lala");
+        }
     }
 }
