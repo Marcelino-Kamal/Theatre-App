@@ -1,0 +1,17 @@
+﻿@model WebApplication5.Models.UserModel
+
+<h2>Login</h2>
+<form asp-action="Login" method="post">
+    <div>
+        <label>Phone Number</label>
+        <input asp-for="phoneNumber" />
+    </div>
+    <div>
+        <label>Password</label>
+        <input asp-for="password" type="password" />
+    </div>
+    <div style="color:red;">
+        @ViewBag.ErrorMessage
+    </div>
+    <button type="submit">Login</button>
+</form>

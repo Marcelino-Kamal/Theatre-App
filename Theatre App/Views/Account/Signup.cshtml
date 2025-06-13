@@ -1,0 +1,26 @@
+﻿@model WebApplication5.Models.UserModel
+
+<h2>Sign Up</h2>
+<form asp-action="Signup" method="post">
+    <div>
+        <label>Full Name</label>
+        <input asp-for="fullName" />
+    </div>
+    <div>
+        <label>Phone Number</label>
+        <input asp-for="phoneNumber" />
+    </div>
+    <div>
+        <label>Password</label>
+        <input asp-for="password" type="password" />
+    </div>
+    <div style="color:red;">
+        @ViewBag.ErrorMessage
+    </div>
+    <button type="submit">Sign Up</button>
+
+    <div style="margin-top: 10px; font-size: 0.9em;">
+        Already have an account?
+        <a asp-controller="Account" asp-action="Login">Log in here</a>
+    </div>
+</form>
