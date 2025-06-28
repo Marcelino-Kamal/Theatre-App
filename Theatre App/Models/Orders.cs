@@ -6,7 +6,7 @@ namespace Theatre_App.Models
     public class Orders
     {
         [Key]
-        public Guid Id {  get; set; } 
+        public Guid Id { get; set; }
 
         [Required]
         public Guid User_Id { get; set; }
@@ -19,7 +19,15 @@ namespace Theatre_App.Models
         [ForeignKey("User_Id")]
         public Users Users { get; set; }
 
-        public List<OrderItem> Contents { get; set; }
+        [NotMapped]
+        public int Duration => (EndDate - StartDate).Days;
+
+        [Required]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
+
 
 
     }

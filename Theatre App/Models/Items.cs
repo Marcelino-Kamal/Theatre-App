@@ -26,17 +26,15 @@ namespace Theatre_App.Models
         public decimal Price { get; set; }
 
         [Required]
-        public int CataId { get; set; }
+        public int Catalogue_Id { get; set; }
 
-        [Required, MaybeNull]
-        public string Imgurl { get; set; }
+        [MaybeNull]
+        public string ImgUrl { get; set; }
 
-        [ForeignKey("CataId")]
+        [ForeignKey("Catalogue_Id")]
         public Catalogue Catalogue { get; set; }
 
-        public List<OrderItem>  OrderItems { get; set; }
-
-       
+ 
 
 
 

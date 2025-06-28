@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Theatre_App.Data;
 
@@ -11,9 +12,11 @@ using Theatre_App.Data;
 namespace Theatre_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250628191255_NewSkeleton")]
+    partial class NewSkeleton
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,30 +88,6 @@ namespace Theatre_App.Migrations
                     b.HasIndex("Catalogue_Id");
 
                     b.ToTable("Items");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d1c2c31e-1234-4fae-8c1c-abcdef123456"),
-                            Catalogue_Id = 2,
-                            Description = "7aga bt3wr",
-                            ImgUrl = "url",
-                            Name = "Swords",
-                            Price = 100m,
-                            Quantity = 9,
-                            inStock = true
-                        },
-                        new
-                        {
-                            Id = new Guid("d2c1c31e-1234-4fae-8c1c-abcdef123456"),
-                            Catalogue_Id = 2,
-                            Description = "7aga 5shb",
-                            ImgUrl = "url",
-                            Name = "Sticks",
-                            Price = 100m,
-                            Quantity = 9,
-                            inStock = true
-                        });
                 });
 
             modelBuilder.Entity("Theatre_App.Models.OrderItem", b =>
@@ -155,26 +134,6 @@ namespace Theatre_App.Migrations
                     b.HasIndex("User_Id");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d1c1c31e-1351-4fae-8c1c-abcdef123456"),
-                            EndDate = new DateTime(2025, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsApproved = false,
-                            IsPaid = false,
-                            StartDate = new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            User_Id = new Guid("d1c1c31e-1234-4fae-8c1c-abcdef123456")
-                        },
-                        new
-                        {
-                            Id = new Guid("d1c1c99e-1351-4fae-8c1c-abcdef123456"),
-                            EndDate = new DateTime(2025, 6, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsApproved = false,
-                            IsPaid = false,
-                            StartDate = new DateTime(2025, 6, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            User_Id = new Guid("d1c1c31e-1234-4fae-8c1c-abcdef123456")
-                        });
                 });
 
             modelBuilder.Entity("Theatre_App.Models.Roles", b =>
