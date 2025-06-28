@@ -13,16 +13,18 @@ namespace Theatre_App.Models
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        public int PhoneNumber { get; set; } = 0000;
+        public string PhoneNumber { get; set; } = "0000";
 
         [Required]
         [MinLength(6,ErrorMessage = "Password must be longer than 6 Characters")]
-        public string password {  get; set; }
+        public string Password {  get; set; }
 
         public int RoleID { get; set; } = 1;
 
         [ForeignKey("RoleID")]
         public Roles Role { get; set; }
+
+        
 
 
 
