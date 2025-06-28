@@ -24,7 +24,7 @@ namespace Theatre_App.Data
                     new Roles { Id = 2, Name = "user"}
             );
             modelBuilder.Entity<Users>().HasData(
-                    new Users {Id= Guid.Parse("d1c1c31e-1234-4fae-8c1c-abcdef123456") , Name = "Marco" , PhoneNumber=01282771887 ,password= "FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=" }
+                    new Users {Id= Guid.Parse("d1c1c31e-1234-4fae-8c1c-abcdef123456") , Name = "Marco" , PhoneNumber="01282771887" ,password= "FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=" }
      
             );
             modelBuilder.Entity<Catalogue>().HasData(
