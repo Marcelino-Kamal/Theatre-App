@@ -4,10 +4,13 @@ namespace Theatre_App.Repository.UserRepo
 {
     public interface IUserRepo
     {
-        List<Users> GetUsers();
-        Users GetByName(string name);
-        void Update(Users user);
-        void Delete(Users user);
+        Task<List<Users>> GetUsers();
+        Task<Users> GetByName(string name);
+        Task UpdateUser(Users user);
+        Task DeleteUser(Users user);
+        Task AddUser(Users user);
+        Task<Users> GetByPhoneNumber(string phoneNumber);
+        
 
     }
 }
