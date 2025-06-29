@@ -8,7 +8,7 @@ function App() {
   
 
   return (
-    <div className="w-full flex h-screen bg-gray-500">
+    <div className="w-full flex h-screen bg-[#D9D9D9]">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
