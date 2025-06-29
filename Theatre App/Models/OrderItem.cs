@@ -1,25 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Theatre_App.Models
 {
+    [PrimaryKey(nameof(OrderId), nameof(ProductId))]
     public class OrderItem
     {
-        [Key]
-        public int Id { get; set; }
+        public Guid ProductId { get; set; }
+
+        [ForeignKey("ProductId")]
+        public Items Item { get; set; }
 
         [Required]
+        public int Count { get; set; }
+
         public Guid OrderId { get; set; }
 
         [ForeignKey("OrderId")]
-        public Orders Orders { get; set; }
-
-        [Required]
-        public Guid ItemId { get; set; }
-
-        [ForeignKey("ItemId")]
-        public Items Items { get; set; }
-
-        public int Quantity { get; set; }
+        public Orders Order { get; set; }
     }
 }
