@@ -6,7 +6,7 @@ using Theatre_App.Service.AuthServices;
 namespace Theatre_App.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
        private readonly IAuthService _authService;
