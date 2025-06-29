@@ -1,4 +1,4 @@
-﻿using Theatre_App.DTO;
+﻿using Theatre_App.DTO.UserDtos;
 using Theatre_App.Helpers;
 using Theatre_App.Models;
 using Theatre_App.Repository.UserRepo;

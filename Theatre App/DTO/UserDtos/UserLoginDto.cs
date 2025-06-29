@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Theatre_App.DTO
+namespace Theatre_App.DTO.UserDtos
 {
     public class UserLoginDto
     {

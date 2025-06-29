@@ -4,10 +4,12 @@ namespace Theatre_App.Repository.ItemsRepo
 {
     public interface IItemsRepo
     {
-        List<Items> GetItems();
-        Items addItem(Items item);
-        Items updateItem(Items item);
-        Items deleteItem(Items item);
+        Task<List<Items>> GetItems();
+        Task AddItem(Items item);
+        Task UpdateItem(Items item);
+        Task DeleteItem(Items item);
+        Task<Items> GetItemByName(string name);
+        Task<Items> GetItemById(Guid id);
 
 
     }

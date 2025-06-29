@@ -1,16 +1,22 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Theatre_App.Data;
+using Theatre_App.Repository.ItemsRepo;
 using Theatre_App.Repository.UserRepo;
 using Theatre_App.Service.AuthServices;
+using Theatre_App.Service.ItemServices;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//Add DI 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IItemsRepo, ItemsRepo>();
+
 var connectionString = Env.GetString("DB_CONNECTION");
 
 // Configure the database connection

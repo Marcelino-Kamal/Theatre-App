@@ -1,4 +1,4 @@
-﻿using Theatre_App.DTO;
+﻿using Theatre_App.DTO.UserDtos;
 
 namespace Theatre_App.Service.AuthServices
 {

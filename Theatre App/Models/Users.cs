@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Theatre_App.Models
 {
+    [Index(nameof(PhoneNumber), IsUnique = true)]
     public class Users
     {
         [Key]

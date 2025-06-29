@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Theatre_App.DTO;
+using Theatre_App.DTO.UserDtos;
 using Theatre_App.Service.AuthServices;
 
 namespace Theatre_App.Controllers

@@ -1,4 +1,4 @@
-﻿namespace Theatre_App.DTO
+﻿namespace Theatre_App.DTO.UserDtos
 {
     public class UserResponeDto
     {
