@@ -31,8 +31,12 @@ namespace Theatre_App.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _authService.Login(dto);
+            if(result != "Login is Succefull")
+            {
+                return BadRequest(new { message = result });    
+            }
 
-            return Ok(result);
+            return Ok(new { message = result });
         }
 
 

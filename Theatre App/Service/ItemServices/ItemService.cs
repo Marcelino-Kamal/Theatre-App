@@ -31,14 +31,43 @@ namespace Theatre_App.Service.ItemServices
             return "Succefully Added";
         }
 
-        public async Task<List<Items>> GetAllItems()
+        public async Task<List<ItemResponseDto>> GetAllItems()
         {
-            return await _itemsRepo.GetItems();
+            
+            var items = await _itemsRepo.GetItems();
+
+            return items.Select(x => new ItemResponseDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                Name = x.Name,
+                InStock = x.inStock,
+                Price = x.Price,
+                Quantity = x.Quantity,
+                ImgUrl = x.ImgUrl
+            }).ToList();
+
         }
 
-        public Task<Items> Getitem(string Name)
+        public async Task<ItemResponseDto> Getitem(string Name)
         {
-            throw new NotImplementedException();
+            var result  = await _itemsRepo.GetItemByName(Name);
+            if(result == null)
+            {
+                return null;
+            }
+
+            return new ItemResponseDto
+            {
+                Id = result.Id,
+                Name = result.Name,
+                Quantity = result.Quantity,
+                Price= result.Price,
+                InStock = result.inStock,
+                Description = result.Description,
+                ImgUrl = result.ImgUrl
+            };
+           
         }
 
         public async Task<string> RemoveItem(Guid id)

@@ -28,7 +28,7 @@ namespace Theatre_App.Repository.ItemsRepo
 
         public async Task<Items> GetItemByName(string name)
         {
-            return await _context.Items.FirstOrDefaultAsync(x => x.Name == name);
+            return await _context.Items.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
         }
 
         public async Task<List<Items>> GetItems()
