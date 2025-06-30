@@ -36,7 +36,7 @@ namespace Theatre_App.Service.ItemServices
             return await _itemsRepo.GetItems();
         }
 
-        public Items Getitem(string Name)
+        public Task<Items> Getitem(string Name)
         {
             throw new NotImplementedException();
         }

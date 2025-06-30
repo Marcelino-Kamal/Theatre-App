@@ -23,10 +23,20 @@ var connectionString = Env.GetString("DB_CONNECTION");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowTravel",
+        policy => policy
+        .WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        );
 
+
+});
 
 var app = builder.Build();
-
+app.UseCors("AllowTravel");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

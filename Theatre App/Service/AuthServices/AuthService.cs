@@ -34,7 +34,7 @@ namespace Theatre_App.Service.AuthServices
                 Password = hashed
             };
             await _userRepo.AddUser(user);
-            return "Succefully added";
+            return "Succefully added!!";
         }
 
         public async Task<String> Login(UserLoginDto userdto) {

@@ -21,7 +21,7 @@ namespace Theatre_App.Models
         [MinLength(6,ErrorMessage = "Password must be longer than 6 Characters")]
         public string Password {  get; set; }
 
-        public int RoleID { get; set; } = 1;
+        public int RoleID { get; set; } = 2;
 
         [ForeignKey("RoleID")]
         public Roles Role { get; set; }
