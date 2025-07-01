@@ -8,11 +8,16 @@ namespace Theatre_App.Service.AuthServices
     public class AuthService : IAuthService
     {
         private readonly IUserRepo _userRepo;
+        private readonly JwtHelper _jwtHelper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public AuthService(IUserRepo userRepo)
+
+        public AuthService(IUserRepo userRepo, JwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor)
         {
             _userRepo = userRepo;
+            _jwtHelper = jwtHelper;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<String> Register(UserSignUpDto userdto) {
 
@@ -37,23 +42,47 @@ namespace Theatre_App.Service.AuthServices
             return "Succefully added!!";
         }
 
-        public async Task<String> Login(UserLoginDto userdto) {
-
+        public async Task<string> Login(UserLoginDto userdto)
+        {
             var user = await _userRepo.GetByPhoneNumber(userdto.PhoneNumber);
-            if (user == null) {
+            if (user == null)
+            {
                 return "User Not Found!!";
             }
+
             var result = PasswordHelper.VerifyPassword(user.Password, userdto.Password);
             if (!result)
             {
                 return "Invalid Password";
             }
-            //jwt helper implementation
 
-            return "Login is Succefull";
+            try
+            {
+                var jwtResult = JwtHelper.GenerateToken(user);
+
+                _httpContextAccessor.HttpContext.Response.Cookies.Append("AuthToken", jwtResult.Token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = jwtResult.Expiry
+                });
+
+                return "Login is Succefull";
+            }
+            catch (Exception ex)
+            {
+                // Log to console for now
+                Console.WriteLine("JWT Error: " + ex.Message);
+                return "JWT generation failed: " + ex.Message;
+            }
+
+            
         }
-         
-        
 
+        public void Logout()
+        {
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete("AuthToken");
+        }
     }
 }

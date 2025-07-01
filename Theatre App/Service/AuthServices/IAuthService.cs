@@ -6,5 +6,6 @@ namespace Theatre_App.Service.AuthServices
     {
         Task<String> Register(UserSignUpDto userdto);
         Task<String> Login(UserLoginDto userdto);
+        void Logout();
     }
 }

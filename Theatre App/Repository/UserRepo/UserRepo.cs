@@ -17,9 +17,9 @@ namespace Theatre_App.Repository.UserRepo
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Users> GetByName(string name) { return await _context.Users.FirstOrDefaultAsync(x => x.Name == name); }
+        public async Task<Users> GetByName(string name) { return await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(x => x.Name == name); }
 
-        public async Task<Users> GetByPhoneNumber(string phoneNumber) { return await _context.Users.FirstOrDefaultAsync(x=>x.PhoneNumber == phoneNumber);}
+        public async Task<Users> GetByPhoneNumber(string phoneNumber) { return await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(x=>x.PhoneNumber == phoneNumber);}
 
  
 

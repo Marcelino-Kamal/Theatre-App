@@ -17,7 +17,7 @@ namespace Theatre_App.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromForm] UserSignUpDto dto) 
+        public async Task<IActionResult> SignUp([FromBody] UserSignUpDto dto) 
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _authService.Register(dto);
@@ -27,17 +27,18 @@ namespace Theatre_App.Controllers
             return Ok(new { message = result });
         }
         [HttpPost("signin")]
-        public async Task<IActionResult> SignIn([FromForm] UserLoginDto dto)
+        public async Task<IActionResult> SignIn([FromBody] UserLoginDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var result = await _authService.Login(dto);
-            if(result != "Login is Succefull")
-            {
-                return BadRequest(new { message = result });    
-            }
+            if (result != "Login is Succefull")
+                return BadRequest(new { message = result });
 
             return Ok(new { message = result });
         }
+
 
 
 
