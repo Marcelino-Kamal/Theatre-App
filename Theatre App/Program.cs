@@ -24,6 +24,8 @@ builder.Services.AddScoped<IItemsRepo, ItemsRepo>();
 builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddHttpContextAccessor();
 
+
+
 var connectionString = Env.GetString("DB_CONNECTION");
 
 var jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
@@ -64,6 +66,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 
+
 // Configure the database connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -87,6 +90,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -95,8 +99,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

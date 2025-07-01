@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Theatre_App.DTO.ItemDtos;
 using Theatre_App.Service.ItemServices;
 
 namespace Theatre_App.Controllers
@@ -26,6 +27,12 @@ namespace Theatre_App.Controllers
 
             var item = await _itemService.Getitem(name);
             return Ok(item);
+        }
+        [HttpPost("additem")]
+        public async Task<IActionResult> AddItems([FromForm]ItemAddDto dto)
+        {
+           var res = await _itemService.AddItem(dto, dto.file);
+            return Ok(new { message = res } );
         }
 
     }

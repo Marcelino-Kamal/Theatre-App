@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
+using System.Threading.Tasks;
 using Theatre_App.DTO.ItemDtos;
 using Theatre_App.Models;
 using Theatre_App.Repository.ItemsRepo;
@@ -8,28 +9,47 @@ namespace Theatre_App.Service.ItemServices
     public class ItemService : IItemService
     {
         private readonly IItemsRepo _itemsRepo;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ItemService(IItemsRepo itemsRepo)
+        public ItemService(IItemsRepo itemsRepo, IWebHostEnvironment webHostEnvironment)
         {
             _itemsRepo = itemsRepo;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<string> AddItem(ItemAddDto dto)
+        public async Task<string> AddItem(ItemAddDto dto, IFormFile? file)
         {
-            //TODO------Some Validation requried 
-            var item = new Items {
-                Id = Guid.NewGuid(),
-                Name = dto.Name,
-                Description = dto.Description,
-                Catalogue_Id = dto.Catalogue_Id,
-                inStock = dto.InStock,
-                Price = dto.Price,
-                Quantity = dto.Qunatity,
-                ImgUrl = dto.ImgUrl
-            };
-            await _itemsRepo.AddItem(item);
-            return "Succefully Added";
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string ItemsPath = Path.Combine(wwwRootPath, @"assets\Items");
+                using (var fileStream = new FileStream(Path.Combine(ItemsPath, filename), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                var ImgUrl = @"\assets\Items\" + filename;
+                var item = new Items
+                {
+                    Id = Guid.NewGuid(),
+                    Name = dto.Name,
+                    Description = dto.Description,
+                    Catalogue_Id = dto.Catalogue_Id,
+                    inStock = dto.InStock,
+                    Price = dto.Price,
+                    Quantity = dto.Quantity,
+                    ImgUrl = ImgUrl,
+                };
+
+                await _itemsRepo.AddItem(item);
+                return "Succefully Added";
+            }
+
+            return "something wrong";
+             
+           
         }
+
 
         public async Task<List<ItemResponseDto>> GetAllItems()
         {
