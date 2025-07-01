@@ -1,32 +1,56 @@
-
 import logo from "../assets/logo.jpg";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { signIn } from "../API/user";
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    PhoneNumber: "",
+    Password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await signIn(formData);
+      alert(res.message);
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-gray-100">
       <div className="flex flex-col w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%] bg-white rounded-2xl items-center p-6 shadow-lg">
-        <img
-          src={logo}
-          alt="logo"
-          className="w-[30%] h-auto mt-4 mb-4 "
-        />
+        <img src={logo} alt="logo" className="w-[30%] h-auto mt-4 mb-4 " />
 
         <span className="text-lg font-bold mb-4">Login to your Account</span>
 
         <form
           method="POST"
           className="flex flex-col gap-4 w-full items-center"
+          onSubmit={handleSubmit}
         >
           <input
             name="PhoneNumber"
             placeholder="Phone Number..."
+            onChange={handleChange}
+            value={formData.PhoneNumber}
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             name="Password"
             type="password"
             placeholder="Password..."
+            onChange={handleChange}
+            value={formData.Password}
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
@@ -37,7 +61,10 @@ export default function Login() {
           </button>
         </form>
         <span>
-          Don't have and Account?<Link to="/signup" className="underline"> Sign up</Link>
+          Don't have and Account?
+          <Link to="/signup" className="underline text-blue-500">
+            Sign up
+          </Link>
         </span>
       </div>
     </div>

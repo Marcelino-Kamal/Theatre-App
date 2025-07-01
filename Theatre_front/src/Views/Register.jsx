@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/logo.jpg";
 import { Link } from "react-router-dom";
-import { signUpUser } from "../API/user"; // ← Import your API function
+import { signUpUser } from "../API/user"; 
 
 export default function Register() {
   const [formData, setFormData] = useState({

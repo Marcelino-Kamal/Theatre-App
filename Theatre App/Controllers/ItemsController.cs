@@ -20,5 +20,12 @@ namespace Theatre_App.Controllers
             return Ok(items);
         }
 
+        [HttpGet("search")]
+        public IActionResult Getitem([FromQuery] string name) {
+
+            var item = _itemService.Getitem(name);
+            return Ok(item);
+        }
+
     }
 }
