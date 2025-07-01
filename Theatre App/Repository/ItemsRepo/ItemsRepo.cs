@@ -33,7 +33,7 @@ namespace Theatre_App.Repository.ItemsRepo
 
         public async Task<List<Items>> GetItems()
         {
-            return await _context.Items.ToListAsync();
+            return await _context.Items.Include(x=> x.Catalogue).ToListAsync();
         }
 
         public async Task UpdateItem(Items item)

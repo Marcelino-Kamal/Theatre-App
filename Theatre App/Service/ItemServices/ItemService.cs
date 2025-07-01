@@ -34,8 +34,8 @@ namespace Theatre_App.Service.ItemServices
         public async Task<List<ItemResponseDto>> GetAllItems()
         {
             
-            var items = await _itemsRepo.GetItems();
-
+            List<Items> items = await _itemsRepo.GetItems();
+            Console.WriteLine(items);
             return items.Select(x => new ItemResponseDto
             {
                 Id = x.Id,

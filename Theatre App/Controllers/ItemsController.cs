@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Theatre_App.Service.ItemServices;
 
 namespace Theatre_App.Controllers
@@ -15,15 +16,15 @@ namespace Theatre_App.Controllers
         }
 
         [HttpGet("listItems")]
-        public IActionResult Getitems() { 
-            var items = _itemService.GetAllItems();
+        public async Task<IActionResult> Getitems() { 
+            var items = await _itemService.GetAllItems();
             return Ok(items);
         }
 
         [HttpGet("search")]
-        public IActionResult Getitem([FromQuery] string name) {
+        public async Task<IActionResult> GetitemAsync([FromQuery] string name) {
 
-            var item = _itemService.Getitem(name);
+            var item = await _itemService.Getitem(name);
             return Ok(item);
         }
 
