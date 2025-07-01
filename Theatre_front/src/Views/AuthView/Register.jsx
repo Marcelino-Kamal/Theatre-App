@@ -1,7 +1,8 @@
 import { useState } from "react";
-import logo from "../assets/logo.jpg";
+import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
-import { signUpUser } from "../API/user"; 
+import { signUpUser } from "../../API/user"; 
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ export default function Register() {
     Password: "",
     Confirm: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -28,9 +30,10 @@ export default function Register() {
 
     try {
       const res = await signUpUser(formData);
-      alert(res.message); // Will show "Successfully added"
+      navigate("/login");
+      alert(res.message); 
     } catch (err) {
-      // Will show "Phone Number exists" or other messages
+      
       alert(err);
     }
   };

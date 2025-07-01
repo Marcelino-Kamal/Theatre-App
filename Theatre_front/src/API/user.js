@@ -11,7 +11,7 @@ export const signUpUser = async (formData) => {
   try {
     const response = await api.post("/Auth/signup", form, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json", 
       },
     });
 
@@ -34,14 +34,11 @@ export const signUpUser = async (formData) => {
 };
 
 export const signIn = async (formData) => {
-  const form = new FormData();
-  form.append("PhoneNumber", formData.PhoneNumber);
-  form.append("Password", formData.Password);
-
   try {
-    const response = await api.post("/Auth/signin", form, {
+    const response = await api.post("/Auth/signin", formData, {
+      withCredentials: true, 
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json", 
       },
     });
 

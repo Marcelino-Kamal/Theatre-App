@@ -1,8 +1,9 @@
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Views/Home";
-import Register from "./Views/Register";
-import Login from "./Views/Login";
+import Register from "./Views/AuthView/Register";
+import Login from "./Views/AuthView/Login";
+import Dashboard from "./Views/Dashboard";
+
 
 function App() {
   
@@ -14,6 +15,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard/>}/>
+        
         </Routes>
       </Router>
     </div>

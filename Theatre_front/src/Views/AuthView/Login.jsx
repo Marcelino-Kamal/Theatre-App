@@ -1,14 +1,15 @@
-import logo from "../assets/logo.jpg";
+import logo from "../../assets/logo.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { signIn } from "../API/user";
+import { Link, Navigate } from "react-router-dom";
+import { signIn } from "../../API/user";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     PhoneNumber: "",
     Password: "",
   });
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -22,6 +23,7 @@ export default function Login() {
     try {
       const res = await signIn(formData);
       alert(res.message);
+      navigate("/dashboard");
     } catch (err) {
       alert(err);
     }
@@ -57,7 +59,7 @@ export default function Login() {
             type="submit"
             className="mt-2  bg-[#D4A156] text-white rounded-xl py-2 hover:bg-blue-600 transition w-[50%]"
           >
-            Sign Up
+            Sign In
           </button>
         </form>
         <span>
