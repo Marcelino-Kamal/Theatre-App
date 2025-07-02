@@ -2,9 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Views/Home";
 import Register from "./Views/AuthView/Register";
 import Login from "./Views/AuthView/Login";
-import Dashboard from "./Views/Dashboard";
+import Dashboard from "./Views/UserDashboard/Dashboard";
 import ItemPage from "./Views/ItemView/ItemPage";
 import DashboardLayout from "./Views/Shared/_DashboardLayout";
+import Profile from "./Views/UserDashboard/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route element={<DashboardLayout/>}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/iteminfo/:id" element={<ItemPage />} />
+            <Route path="/profile" element={<Profile/>}/>
           </Route>
         </Routes>
       </Router>

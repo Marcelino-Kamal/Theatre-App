@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import DashboardNav from "../components/DashboardComponents/DashboardNav";
-import { fetchitems } from "../API/items";
-import ICards from "../components/ICards";
+import { fetchitems } from "../../API/items";
+import ICards from "../../components/ICards";
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);
@@ -25,7 +24,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="w-full max-h-full flex-col flex-wrap pt-24">
+    <div className="w-full min-h-screen flex-col flex-wrap pt-24 bg-[#D2B48C]">
       <div className="w-full px-4">
         {loading ? (
           <p className="text-center text-gray-600">Loading...</p>
