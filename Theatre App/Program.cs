@@ -13,6 +13,7 @@ using Theatre_App.Repository.UserRepo;
 using Theatre_App.Service.AuthServices;
 using Theatre_App.Service.ItemServices;
 using Theatre_App.Service.OrderServices;
+using Theatre_App.Service.UserServices;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IItemsRepo, ItemsRepo>();
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
@@ -80,7 +82,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowTravel", policy =>
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("https://localhost:5173")
               .AllowCredentials() 
               .AllowAnyHeader()
               .AllowAnyMethod());

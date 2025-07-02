@@ -23,8 +23,9 @@ namespace Theatre_App.Helpers
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.PhoneNumber),
-                new Claim("UserId", user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.MobilePhone,user.PhoneNumber ),
                 new Claim(ClaimTypes.Role, user.Role.Name)
             };
 

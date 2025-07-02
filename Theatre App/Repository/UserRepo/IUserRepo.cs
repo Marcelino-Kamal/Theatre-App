@@ -10,6 +10,7 @@ namespace Theatre_App.Repository.UserRepo
         Task DeleteUser(Users user);
         Task AddUser(Users user);
         Task<Users> GetByPhoneNumber(string phoneNumber);
+        Task<Users> GetById(Guid id);
         
 
     }

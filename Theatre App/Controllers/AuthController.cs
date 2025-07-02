@@ -38,7 +38,12 @@ namespace Theatre_App.Controllers
 
             return Ok(new { message = result });
         }
-
+        [HttpGet("logout")]
+        public IActionResult Logout()
+        {
+            _authService.Logout();
+            return Ok(new {message = "logged out!"});
+        }
 
 
 
