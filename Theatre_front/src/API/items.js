@@ -12,3 +12,19 @@ export const fetchitems = async () => {
     throw new Error("Failed to fetch items from the server.");
   }
 };
+
+export const fetchitemById = async (id) => {
+
+  try{
+    const response = await api.get(`/Items/getitem/${id}`)
+    return response.data;
+
+  }catch(error){
+    if (error.response?.status === 400 && error.response.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+  }
+  throw new Error("Failed to fetch items from the server.");
+
+
+}

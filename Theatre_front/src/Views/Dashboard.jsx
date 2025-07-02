@@ -26,8 +26,6 @@ export default function Dashboard() {
 
   return (
     <div className="w-full max-h-full flex-col flex-wrap pt-24">
-      <DashboardNav />
-
       <div className="w-full px-4">
         {loading ? (
           <p className="text-center text-gray-600">Loading...</p>

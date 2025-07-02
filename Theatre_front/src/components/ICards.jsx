@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ICards({ data }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -5,6 +7,7 @@ export default function ICards({ data }) {
   const fullImageUrl = `${baseUrl}${imagePath}`;
 
   return (
+    <Link to={`/iteminfo/${data.id}`} className="block">
     <div className="flex flex-col bg-white w-full rounded-2xl m-[10px] shadow-md overflow-hidden flex-wrap">
       <img src={fullImageUrl} alt={data.name} className="" />
       <div className="flex flex-col items-center w-full">
@@ -17,10 +20,12 @@ export default function ICards({ data }) {
               ? "bg-[#0C0C0C] text-white hover:bg-[#c55050] cursor-pointer"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
+          
         >
           Book Now
         </button>
       </div>
     </div>
+    </Link>
   );
 }
