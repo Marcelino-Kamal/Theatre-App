@@ -6,6 +6,9 @@ import Dashboard from "./Views/UserDashboard/Dashboard";
 import ItemPage from "./Views/ItemView/ItemPage";
 import DashboardLayout from "./Views/Shared/_DashboardLayout";
 import Profile from "./Views/UserDashboard/Profile";
+import CartProvider from "./context/CartContext";
+import Checkout from "./Views/CheckoutView/Checkout";
+
 
 function App() {
   return (
@@ -15,10 +18,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
-          <Route element={<DashboardLayout/>}>
+          <Route element={ <CartProvider><DashboardLayout /></CartProvider> }>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/iteminfo/:id" element={<ItemPage />} />
-            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
         </Routes>
       </Router>

@@ -1,18 +1,24 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { UserCircleIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon as ShoppingCartOutline } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon as ShoppingCartSolid } from "@heroicons/react/24/solid";
 import { LogOut } from "../../API/Auth";
+import { useCart } from "../../context/CartContext";
 
 export default function DashboardNav() {
   const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const { cartItems, total } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
+  const cartRef = useRef(null);
 
   const handleLogout = async () => {
     try {
       await LogOut();
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       console.error(error.message);
       alert("Logout failed!");
@@ -23,6 +29,9 @@ export default function DashboardNav() {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenDropdown(false);
+      }
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setCartOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -50,8 +59,11 @@ export default function DashboardNav() {
         </div>
 
         {/* Center: Logo */}
+
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <img src={logo} alt="Logo" className="h-20 w-auto" />
+          <Link to="/dashboard">
+            <img src={logo} alt="Logo" className="h-20 w-auto" />
+          </Link>
         </div>
 
         {/* Right: Profile + Cart */}
@@ -89,9 +101,60 @@ export default function DashboardNav() {
           </div>
 
           {/* Cart Icon */}
-          <Link to="/cart">
-            <ShoppingCartIcon className="w-8 h-8 text-gray-600 hover:text-[#DA6868]" />
-          </Link>
+          <div className="relative" ref={cartRef}>
+            <button onClick={() => setCartOpen((prev) => !prev)}>
+              {cartItems.length > 0 ? (
+                <ShoppingCartSolid className="w-8 h-8 text-[#DA6868]" />
+              ) : (
+                <ShoppingCartOutline className="w-8 h-8 text-gray-600 hover:text-[#DA6868]" />
+              )}
+            </button>
+
+            {/* Cart Dropdown */}
+            {cartOpen && (
+              <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
+                <h3 className="text-lg font-semibold mb-2">Cart</h3>
+                <div className="max-h-60 overflow-y-auto space-y-3">
+                  {cartItems.length === 0 ? (
+                    <p className="text-gray-500">Your cart is empty.</p>
+                  ) : (
+                    cartItems.map((item, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-4 border-b pb-2"
+                      >
+                        <img
+                          src={item.imageUrl}
+                          alt={item.name}
+                          className="w-12 h-12 object-cover rounded"
+                        />
+                        <div className="flex-1">
+                          <p className="font-medium">{item.name}</p>
+                          <p className="text-sm">Qty: {item.count}</p>
+                          <p className="text-sm text-[#DA6868] font-semibold">
+                            Total: {item.count * item.price} LE
+                          </p>
+                          <p className="text-sm">Start date : {item.startDate}</p>
+                          <p className="text-sm">End date : {item.endDate}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+                {cartItems.length > 0 && (
+                  <div className="mt-4 flex justify-between items-center">
+                    <p className="font-bold">Total: {total} LE</p>
+                    <Link
+                      to="/checkout"
+                      className="bg-[#DA6868] text-white px-4 py-2 rounded hover:bg-[#c55050] transition"
+                    >
+                      Checkout
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>
