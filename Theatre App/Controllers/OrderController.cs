@@ -7,14 +7,9 @@ namespace Theatre_App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class OrderController(IOrderService orderService) : Controller
     {
-        private readonly IOrderService _orderService;
-
-        public OrderController(IOrderService orderService)
-        {
-            _orderService = orderService;
-        }
+        private readonly IOrderService _orderService = orderService;
 
         [HttpPost("addorder")]
         public async Task<IActionResult> addOrder([FromForm]CartAddDto dto)

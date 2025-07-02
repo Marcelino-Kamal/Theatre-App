@@ -6,16 +6,10 @@ using Theatre_App.Repository.ItemsRepo;
 
 namespace Theatre_App.Service.ItemServices
 {
-    public class ItemService : IItemService
+    public class ItemService(IItemsRepo itemsRepo, IWebHostEnvironment webHostEnvironment) : IItemService
     {
-        private readonly IItemsRepo _itemsRepo;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public ItemService(IItemsRepo itemsRepo, IWebHostEnvironment webHostEnvironment)
-        {
-            _itemsRepo = itemsRepo;
-            _webHostEnvironment = webHostEnvironment;
-        }
+        private readonly IItemsRepo _itemsRepo = itemsRepo;
+        private readonly IWebHostEnvironment _webHostEnvironment = webHostEnvironment;
 
         public async Task<string> AddItem(ItemAddDto dto, IFormFile? file)
         {

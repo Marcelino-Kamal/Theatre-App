@@ -3,14 +3,9 @@ using Theatre_App.Repository.UserRepo;
 
 namespace Theatre_App.Service.UserServices
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepo userRepo) : IUserService
     {
-        private readonly  IUserRepo _userRepo;
-
-        public UserService(IUserRepo userRepo)
-        {
-            _userRepo = userRepo;
-        }
+        private readonly  IUserRepo _userRepo = userRepo;
 
         public async Task<UserResponeDto> GetUserById(Guid id)
         {

@@ -5,20 +5,12 @@ using Theatre_App.Repository.UserRepo;
 
 namespace Theatre_App.Service.AuthServices
 {
-    public class AuthService : IAuthService
+    public class AuthService(IUserRepo userRepo, JwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor) : IAuthService
     {
-        private readonly IUserRepo _userRepo;
-        private readonly JwtHelper _jwtHelper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserRepo _userRepo = userRepo;
+        private readonly JwtHelper _jwtHelper = jwtHelper;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-
-
-        public AuthService(IUserRepo userRepo, JwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor)
-        {
-            _userRepo = userRepo;
-            _jwtHelper = jwtHelper;
-            _httpContextAccessor = httpContextAccessor;
-        }
         public async Task<String> Register(UserSignUpDto userdto) {
 
             string FName = userdto.Name.Trim();
