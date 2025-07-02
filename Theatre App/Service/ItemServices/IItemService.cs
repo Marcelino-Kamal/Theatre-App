@@ -9,6 +9,7 @@ namespace Theatre_App.Service.ItemServices
         Task<string> RemoveItem(Guid id);
         Task<string> UpdateItem(ItemAddDto dto);
         Task<List<ItemResponseDto>> GetAllItems();
-        Task<ItemResponseDto> Getitem(string Name);
+        Task<ItemResponseDto> GetitemByName(string Name);
+        Task<ItemResponseDto> GetitemById(Guid id);
     }
 }

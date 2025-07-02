@@ -20,6 +20,7 @@ namespace Theatre_App.Service.ItemServices
         public async Task<string> AddItem(ItemAddDto dto, IFormFile? file)
         {
             string wwwRootPath = _webHostEnvironment.WebRootPath;
+            bool flag = false;
             if (file != null)
             {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -29,18 +30,21 @@ namespace Theatre_App.Service.ItemServices
                     file.CopyTo(fileStream);
                 }
                 var ImgUrl = @"\assets\Items\" + filename;
+                if (dto.Quantity > 0)
+                {
+                    flag= true;
+                }
                 var item = new Items
                 {
                     Id = Guid.NewGuid(),
                     Name = dto.Name,
                     Description = dto.Description,
                     Catalogue_Id = dto.Catalogue_Id,
-                    inStock = dto.InStock,
+                    inStock = flag,
                     Price = dto.Price,
                     Quantity = dto.Quantity,
                     ImgUrl = ImgUrl,
                 };
-
                 await _itemsRepo.AddItem(item);
                 return "Succefully Added";
             }
@@ -69,7 +73,7 @@ namespace Theatre_App.Service.ItemServices
 
         }
 
-        public async Task<ItemResponseDto> Getitem(string Name)
+        public async Task<ItemResponseDto> GetitemByName(string Name)
         {
             var result  = await _itemsRepo.GetItemByName(Name);
             if(result == null)
@@ -88,6 +92,24 @@ namespace Theatre_App.Service.ItemServices
                 ImgUrl = result.ImgUrl
             };
            
+        }
+
+        public async Task<ItemResponseDto> GetitemById(Guid id)
+        {
+           var result = await _itemsRepo.GetItemById(id);
+            if( result == null)
+            {
+                return null;
+            }
+            return new ItemResponseDto {
+                Id = result.Id,
+                Name = result.Name,
+                Quantity = result.Quantity,
+                Price= result.Price,
+                Description = result.Description,
+                InStock= result.inStock,
+                ImgUrl = result.ImgUrl
+            };
         }
 
         public async Task<string> RemoveItem(Guid id)

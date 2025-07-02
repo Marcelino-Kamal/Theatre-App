@@ -7,9 +7,12 @@ using System.Text;
 using Theatre_App.Data;
 using Theatre_App.Helpers;
 using Theatre_App.Repository.ItemsRepo;
+using Theatre_App.Repository.OrderItemsRepo;
+using Theatre_App.Repository.OrderRepo;
 using Theatre_App.Repository.UserRepo;
 using Theatre_App.Service.AuthServices;
 using Theatre_App.Service.ItemServices;
+using Theatre_App.Service.OrderServices;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -19,8 +22,11 @@ builder.Services.AddControllersWithViews();
 //Add DI 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IItemsRepo, ItemsRepo>();
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+builder.Services.AddScoped<IOrderItemsRepo, OrderItemsRepo>();
 builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddHttpContextAccessor();
 

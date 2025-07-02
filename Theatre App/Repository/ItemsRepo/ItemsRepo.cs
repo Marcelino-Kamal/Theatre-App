@@ -44,7 +44,7 @@ namespace Theatre_App.Repository.ItemsRepo
 
         public async Task<Items> GetItemById(Guid id)
         {
-            return await _context.Items.FindAsync(id);
+            return await _context.Items.Include(x => x.Catalogue).FirstOrDefaultAsync(z => z.Id == id);
 
         }
     }
