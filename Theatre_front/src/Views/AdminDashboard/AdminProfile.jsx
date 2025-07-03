@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import { getUser} from "../../API/user";
 
-export default function Profile() {
+export default function AdminProfile() {
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -42,7 +42,9 @@ export default function Profile() {
           <p className="font-semibold text-gray-700">Phone Number:</p>
           <p className="text-gray-900">{user.phoneNumber}</p>
         </div>
-         
+         <div className="flex flex-col bg-white rounded-xl p-4 shadow">
+          <p className="font-semibold text-gray-700">Role: <span className="text-red-600">{user.role}</span></p>
+        </div>
       </div>
     </div>
   );

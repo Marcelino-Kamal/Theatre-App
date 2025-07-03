@@ -25,6 +25,10 @@ export default function Checkout() {
             ))}
           </div>
           <div className="mt-6 text-xl font-bold">Grand Total: {total} LE</div>
+          <div className="flex w-full items-center justify-center ">
+            <button className="bg-black text-white rounded-2xl w-[30%] hover:bg-[#c55050] cursor-pointer">Checkout</button>
+            <button className="bg-black text-white rounded-2xl w-[30%] hover:bg-[#c55050] cursor-pointer">Empty Cart</button>
+          </div>
         </>
       )}
     </div>

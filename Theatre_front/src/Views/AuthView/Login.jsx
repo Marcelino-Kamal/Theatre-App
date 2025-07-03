@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { signIn } from "../../API/Auth";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../../API/user";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -23,7 +24,12 @@ export default function Login() {
     try {
       const res = await signIn(formData);
       alert(res.message);
-      navigate("/dashboard");
+      const user = await getUser();
+      if(user.role === "admin"){
+        navigate("/admin")
+      }else{
+        navigate("/dashboard")
+      }
     } catch (err) {
       alert(err);
     }
