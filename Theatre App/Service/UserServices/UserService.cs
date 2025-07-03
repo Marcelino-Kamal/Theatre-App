@@ -16,8 +16,10 @@ namespace Theatre_App.Service.UserServices
             }
             return new UserResponeDto
             {
+                Id = User.Id,
                 Name = User.Name,
                 PhoneNumber = User.PhoneNumber,
+                Role = User.Role.Name
             };
 
         }
