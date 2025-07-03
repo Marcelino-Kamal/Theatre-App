@@ -1,4 +1,5 @@
-﻿using Theatre_App.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Theatre_App.Data;
 using Theatre_App.Models;
 
 namespace Theatre_App.Repository.OrderItemsRepo
@@ -16,6 +17,11 @@ namespace Theatre_App.Repository.OrderItemsRepo
         {
             await _context.AddAsync(orderItem);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<OrderItem>> GetAllOrders()
+        {
+            return await _context.OrderItems.Include(x=>x.Order).ThenInclude(o=>o.Users).Include(z=>z.Item).ToListAsync();
         }
     }
 }

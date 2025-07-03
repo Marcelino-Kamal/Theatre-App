@@ -62,7 +62,8 @@ namespace Theatre_App.Service.ItemServices
                 InStock = x.inStock,
                 Price = x.Price,
                 Quantity = x.Quantity,
-                ImgUrl = x.ImgUrl
+                ImgUrl = x.ImgUrl,
+                Catalogue = x.Catalogue.Name
             }).ToList();
 
         }

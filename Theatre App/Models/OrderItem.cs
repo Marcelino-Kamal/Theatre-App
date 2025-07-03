@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Theatre_App.Models
 {
-    [PrimaryKey(nameof(OrderId), nameof(ProductId))]
+    [PrimaryKey(nameof(OrderId), nameof(ItemId))]
     public class OrderItem
     {
-        public Guid ProductId { get; set; }
+        public Guid ItemId { get; set; }
 
-        [ForeignKey("ProductId")]
+        [ForeignKey("ItemId")]
         public Items Item { get; set; }
 
         [Required]

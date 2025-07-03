@@ -12,15 +12,25 @@ namespace Theatre_App.Controllers
         private readonly IOrderService _orderService = orderService;
 
         [HttpPost("addorder")]
-        public async Task<IActionResult> addOrder([FromForm]CartAddDto dto)
+        public async Task<IActionResult> AddOrder([FromForm]CartAddDto dto)
         {
             var result = await _orderService.CreateOrder(dto);
-            if (result != "Succfully Added My Boi") {
+            if (result != "Succfully Added") {
 
                 return BadRequest(new { message = result });
                 
             }
             return Ok(new { message = result });
+        }
+        [HttpGet("getorders")]
+        public async Task<IActionResult> GetOrders()
+        {
+            var result = await _orderService.GetAllOrders();
+            if(result == null)
+            {
+                return NotFound(new {message = "No Orders Found atm"});
+            }
+            return Ok(result);
         }
     }
 }

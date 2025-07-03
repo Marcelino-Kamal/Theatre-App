@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Theatre_App.Service.UserServices;
 
 namespace Theatre_App.Controllers
@@ -17,7 +18,7 @@ namespace Theatre_App.Controllers
         }
         [Authorize]
         [HttpGet("getuser")]
-        public async Task<IActionResult> GetuUser()
+        public async Task<IActionResult> GetUser()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -30,6 +31,17 @@ namespace Theatre_App.Controllers
                 return NotFound("User not found.");
 
             return Ok(user);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet("getusers")]
+        public async Task<IActionResult> GetAllUsers() {
+            var result = await _userService.GetAllUsers();
+            if(result == null)
+            {
+                return NotFound("Users not found.");
+            }
+            return Ok(result);
+           
         }
     }
 }

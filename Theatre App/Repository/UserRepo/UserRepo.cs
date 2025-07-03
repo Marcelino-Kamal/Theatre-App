@@ -23,7 +23,7 @@ namespace Theatre_App.Repository.UserRepo
 
 
 
-        public async Task<List<Users>> GetUsers() { return await _context.Users.ToListAsync(); }
+        public async Task<List<Users>> GetUsers() { return await _context.Users.Include(x=>x.Role).ToListAsync(); }
 
         public async Task UpdateUser(Users user)
         {

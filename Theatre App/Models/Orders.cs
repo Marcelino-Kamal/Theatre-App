@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Theatre_App.Models
 {
@@ -27,5 +28,11 @@ namespace Theatre_App.Models
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        [MaybeNull]
+        public string Abona_approved { get; set; }
+
+        [MaybeNull]
+        public string Payment { get; set; } 
     }
 }

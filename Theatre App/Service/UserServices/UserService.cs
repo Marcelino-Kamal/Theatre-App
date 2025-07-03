@@ -1,4 +1,5 @@
 ﻿using Theatre_App.DTO.UserDtos;
+using Theatre_App.Models;
 using Theatre_App.Repository.UserRepo;
 
 namespace Theatre_App.Service.UserServices
@@ -6,6 +7,19 @@ namespace Theatre_App.Service.UserServices
     public class UserService(IUserRepo userRepo) : IUserService
     {
         private readonly  IUserRepo _userRepo = userRepo;
+
+        public async Task<List<UserResponeDto>> GetAllUsers()
+        {
+            List<Users> users = await _userRepo.GetUsers();
+
+            return users.Select(x=> new UserResponeDto {
+                Id = x.Id,
+                Name = x.Name,
+                PhoneNumber = x.PhoneNumber,
+                Role = x.Role.Name
+            }).ToList();
+
+        }
 
         public async Task<UserResponeDto> GetUserById(Guid id)
         {
