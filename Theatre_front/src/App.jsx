@@ -12,6 +12,10 @@ import AdminLayout from "./Views/Shared/_AdminLayout";
 import AdminDash from "./Views/AdminDashboard/AdminDash";
 import AdminProfile from "./Views/AdminDashboard/AdminProfile";
 import RequireRole from "./config/RequireRole";
+import ManagerDash from "./Views/AdminDashboard/ManagerDash";
+import ItemList from "./Views/AdminDashboard/Lists/ItemList";
+import OrderList from "./Views/AdminDashboard/Lists/OrderList"
+import UserList from "./Views/AdminDashboard/Lists/UserList";
 
 function App() {
   return (
@@ -31,6 +35,10 @@ function App() {
           >
             <Route path="/admin" element={<AdminDash />} />
             <Route path="/adminprofile" element={<AdminProfile />} />
+            <Route path="/manager" element={<ManagerDash />} />
+            <Route path="/productlist" element={<ItemList />} />
+            <Route path="/orderlist" element={<OrderList />} />
+            <Route path="/userlist" element={<UserList />} />
           </Route>
           <Route
             element={
