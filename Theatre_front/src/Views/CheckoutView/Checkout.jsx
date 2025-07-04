@@ -1,7 +1,43 @@
 import { useCart } from "../../context/CartContext";
+import { addOrder } from "../../API/Orders";
+import { getUser } from "../../API/user"; 
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
-  const { cartItems, total } = useCart();
+  const { cartItems, total, clearCart } = useCart();
+  const navigate = useNavigate();
+  const handleCheckout = async () => {
+    try {
+    
+      const user = await getUser();
+      const userId = user.id; 
+
+      if (!userId) {
+        alert("Unable to retrieve user information.");
+        return;
+      }
+
+    
+      const orderData = {
+        userId: userId,
+        items: cartItems.map(item => ({
+          itemId: item.id, 
+          count: item.count,
+          startDate: item.startDate,
+          endDate: item.endDate
+        }))
+      };
+
+     
+      const response = await addOrder(orderData);
+      alert(response.message);
+
+      clearCart(); 
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#D2B48C] p-6">
@@ -25,9 +61,19 @@ export default function Checkout() {
             ))}
           </div>
           <div className="mt-6 text-xl font-bold">Grand Total: {total} LE</div>
-          <div className="flex w-full items-center justify-center ">
-            <button className="bg-black text-white rounded-2xl w-[30%] hover:bg-[#c55050] cursor-pointer">Checkout</button>
-            <button className="bg-black text-white rounded-2xl w-[30%] hover:bg-[#c55050] cursor-pointer">Empty Cart</button>
+          <div className="flex w-full items-center justify-center gap-4 mt-4">
+            <button
+              onClick={handleCheckout}
+              className="bg-black text-white rounded-2xl w-[30%] hover:bg-[#c55050] cursor-pointer"
+            >
+              Checkout
+            </button>
+            <button
+              onClick={clearCart}
+              className="bg-black text-white rounded-2xl w-[30%] hover:bg-[#c55050] cursor-pointer"
+            >
+              Empty Cart
+            </button>
           </div>
         </>
       )}

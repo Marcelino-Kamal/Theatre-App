@@ -45,11 +45,18 @@ export default function CartProvider({ children }) {
     setCartItems((prev) => [...prev, item]);
   };
 
+    const clearCart = () => {
+    setCartItems([]);
+    if (userId) {
+      localStorage.removeItem(`cart_${userId}`);
+    }
+  };
+
   // ✅ Calculate total price
   const total = cartItems.reduce((sum, item) => sum + item.price * item.count, 0);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, total, setCartItems }}>
+    <CartContext.Provider value={{ cartItems, addToCart, total, setCartItems ,  clearCart }}>
       {children}
     </CartContext.Provider>
   );
