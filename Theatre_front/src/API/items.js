@@ -28,3 +28,25 @@ export const fetchitemById = async (id) => {
 
 
 }
+
+export const additem = async (formData) =>{
+
+   const data = new FormData();
+    data.append("Name", formData.itemName);
+    data.append("Description", formData.description);
+    data.append("Price", formData.price);
+    data.append("Quantity", formData.quantity);
+    data.append("file", formData.file);
+    data.append("Catalogue_Id", formData.catalogue);
+
+
+  try{
+    const response = await api.post("/Items/additem",data);
+    return response.data;
+  }catch(error){
+    if (error.response?.status === 400 && error.response.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+  }
+  throw new Error("Failed to Add item from the server.");
+};

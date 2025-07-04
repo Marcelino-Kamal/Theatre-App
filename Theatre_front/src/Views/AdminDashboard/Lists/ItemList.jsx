@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchitems } from "../../../API/items";
 import $ from "jquery";
 import "datatables.net";
 
 export default function ProductTable() {
   const tableRef = useRef();
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const dataTable = useRef(null);
@@ -84,6 +86,7 @@ export default function ProductTable() {
           </table>
         </div>
       )}
+      <button className="mt-3 text-sm sm:text-base text-white px-4 py-2 bg-black hover:bg-[#DA6868] cursor-pointer rounded-2xl transition" onClick={()=>navigate("/additem")}>Add Product</button>
     </div>
   );
 }
