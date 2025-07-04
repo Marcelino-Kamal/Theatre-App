@@ -12,10 +12,10 @@ namespace Theatre_App.Controllers
         private readonly IOrderService _orderService = orderService;
 
         [HttpPost("addorder")]
-        public async Task<IActionResult> AddOrder([FromForm]CartAddDto dto)
+        public async Task<IActionResult> AddOrder([FromBody]CartAddDto dto)
         {
             var result = await _orderService.CreateOrder(dto);
-            if (result != "Succfully Added") {
+            if (result != "Successfully Added") {
 
                 return BadRequest(new { message = result });
                 

@@ -17,51 +17,79 @@ namespace Theatre_App.Service.OrderServices
 
         public async Task<string> CreateOrder(CartAddDto dto)
         {
-            var item = await _itemsRepo.GetItemById(dto.Itemid);
-            if (dto.Count > item.Quantity) {
-                return "Cannot Add Order" +
-                    " there is :" + item.Quantity + " in stock";
+    
+            foreach (var cartItem in dto.Items)
+            {
+                if (cartItem.StartDate >= cartItem.EndDate)
+                {
+                    return "StartDate must be earlier than EndDate.";
+                }
+                var item = await _itemsRepo.GetItemById(cartItem.ItemId);
+                if (item == null)
+                {
+                    return $"Item with ID {cartItem.ItemId} not found.";
+                }
 
-            }
-            if (dto.StartDate >= dto.EndDate){
-                return "StartDate Must be smaller than EndDate";
+                if (cartItem.Count > item.Quantity)
+                {
+                    return $"Cannot add order: Only {item.Quantity} units in stock for item {item.Name}.";
+                }
             }
 
-            var Order = new Orders{
+        
+            var order = new Orders
+            {
                 Id = Guid.NewGuid(),
                 User_Id = dto.UserId,
                 IsApproved = false,
                 IsPaid = false,
-                StartDate = dto.StartDate,
-                EndDate = dto.EndDate,
                 Abona_approved = "No",
-                Payment ="No"
+                Payment = "No"
             };
-            await _ordersRepo.AddOrder(Order);
+            await _ordersRepo.AddOrder(order);
 
-            var Oi = new OrderItem  {
-                ItemId = dto.Itemid,
-                OrderId = Order.Id,
-                Count = dto.Count,
+      
+            foreach (var cartItem in dto.Items)
+            {
+                var orderItem = new OrderItem
+                {
+                    OrderId = order.Id,
+                    ItemId = cartItem.ItemId,
+                    Count = cartItem.Count,
+                    StartDate = cartItem.StartDate,
+                    EndDate = cartItem.EndDate
+                    
+                };
 
-            };
-            await _orderItemsRepo.AddOrderWithItem(Oi);
-            return "Succfully Added";
+                await _orderItemsRepo.AddOrderWithItem(orderItem);
+
+
+                 /*
+                 var item = await _itemsRepo.GetItemById(cartItem.ItemId);
+                 item.Quantity -= cartItem.Count;
+                 item.inStock = item.Quantity > 0;
+                 await _itemsRepo.UpdateItem(item);
+                 */
+            }
+
+            return "Successfully Added";
         }
+
         public async Task<List<OrderItemResponseDto>> GetAllOrders()
         {
 
             List<OrderItem> orderItems = await _orderItemsRepo.GetAllOrders();
-            Console.WriteLine(orderItems);
+
             return orderItems.Select(x => new OrderItemResponseDto
             {
                 OrderId = x.OrderId,
                 itemName = x.Item.Name,
                 UserName = x.Order.Users.Name,
+                Count = x.Count,
                 IsApproved = x.Order.IsApproved,
                 IsPaid = x.Order.IsPaid,
-                StartDate = x.Order.StartDate,
-                EndDate = x.Order.EndDate,
+                StartDate = x.StartDate,
+                EndDate = x.EndDate,
                 Abona_Approved = x.Order.Abona_approved,
                 Payment = x.Order.Payment
             }).ToList();

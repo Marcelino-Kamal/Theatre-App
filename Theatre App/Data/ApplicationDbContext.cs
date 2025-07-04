@@ -19,6 +19,19 @@ namespace Theatre_App.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<OrderItem>()
+            .HasKey(oi => new { oi.OrderId, oi.ItemId });
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Item)
+                .WithMany(i => i.OrderItems)
+                .HasForeignKey(oi => oi.ItemId);
+
             modelBuilder.Entity<Roles>().HasData(
                     new Roles { Id = 1, Name = "admin" },
                     new Roles { Id = 2, Name = "user" }

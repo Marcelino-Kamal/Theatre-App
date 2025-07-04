@@ -34,5 +34,7 @@ namespace Theatre_App.Models
         [ForeignKey("Catalogue_Id")]
         public Catalogue Catalogue { get; set; }
 
+        public ICollection<OrderItem> OrderItems { get; set; }
+
     }
 }

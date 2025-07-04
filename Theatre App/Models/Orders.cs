@@ -20,19 +20,13 @@ namespace Theatre_App.Models
         [ForeignKey("User_Id")]
         public Users Users { get; set; }
 
-        [NotMapped]
-        public int Duration => (EndDate - StartDate).Days;
-
-        [Required]
-        public DateTime StartDate { get; set; }
-
-        [Required]
-        public DateTime EndDate { get; set; }
 
         [MaybeNull]
         public string Abona_approved { get; set; }
 
         [MaybeNull]
-        public string Payment { get; set; } 
+        public string Payment { get; set; }
+
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }
