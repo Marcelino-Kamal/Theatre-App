@@ -1,0 +1,7 @@
+nltk
+pyodbc
+python-dotenv
+scikit-learn
+transformers
+torch
+pandas
