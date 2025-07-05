@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Theatre_App.DTO.CartDtos;
+using Theatre_App.DTO.OrderDtos;
 using Theatre_App.Service.OrderServices;
 
 namespace Theatre_App.Controllers
@@ -31,6 +34,31 @@ namespace Theatre_App.Controllers
                 return NotFound(new {message = "No Orders Found atm"});
             }
             return Ok(result);
+        }
+        [Authorize]
+        [HttpGet("myorder")]
+        public async Task<IActionResult> GetMyOrder() {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized("User ID not found in token.");
+
+            var result = await _orderService.GetUserOrder(Guid.Parse(userId));
+
+
+            if (result == null)
+                return NotFound(new { message = "user's order not found" });
+            return Ok(result);
+        }
+        [HttpPut("updateorder")]
+        public async Task<IActionResult> updateOrders(OrderUpdateDto dto)
+        {
+            var res = await _orderService.UpdateOrder(dto);
+
+            if(res != "Successfully updateds")
+            {
+                return BadRequest(new {message = res});
+            }
+            return Ok(res);
         }
     }
 }

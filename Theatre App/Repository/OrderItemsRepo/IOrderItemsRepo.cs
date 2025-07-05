@@ -6,5 +6,6 @@ namespace Theatre_App.Repository.OrderItemsRepo
     {
         Task AddOrderWithItem(OrderItem orderItem);
         Task<List<OrderItem>> GetAllOrders();
+        Task<List<OrderItem>> GetOrdersByUserId(Guid id);
     }
 }

@@ -9,5 +9,7 @@ namespace Theatre_App.Service.OrderServices
     {
         Task<string> CreateOrder(CartAddDto dto);
         Task<List<OrderItemResponseDto>> GetAllOrders();
+        Task<List<OrderItemResponseDto>> GetUserOrder(Guid userId);
+        Task<string> UpdateOrder(OrderUpdateDto dto);
     }
 }

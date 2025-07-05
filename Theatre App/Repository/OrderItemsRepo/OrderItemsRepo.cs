@@ -23,5 +23,10 @@ namespace Theatre_App.Repository.OrderItemsRepo
         {
             return await _context.OrderItems.Include(x=>x.Order).ThenInclude(o=>o.Users).Include(z=>z.Item).ToListAsync();
         }
+
+        public async Task<List<OrderItem>> GetOrdersByUserId(Guid id)
+        {
+            return await _context.OrderItems.Include(x=>x.Order).ThenInclude(o=>o.Users).Include(z=>z.Item).Where(x=>x.Order.User_Id == id).ToListAsync();
+        }
     }
 }

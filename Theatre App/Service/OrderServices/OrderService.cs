@@ -94,6 +94,42 @@ namespace Theatre_App.Service.OrderServices
                 Payment = x.Order.Payment
             }).ToList();
         }
+
+        public async Task<List<OrderItemResponseDto>> GetUserOrder(Guid userId)
+        {
+            List<OrderItem> oi = await _orderItemsRepo.GetOrdersByUserId(userId);
+
+            return oi.Select(x => new OrderItemResponseDto
+            {
+                OrderId = x.OrderId,
+                itemName = x.Item.Name,
+                UserName = x.Order.Users.Name,
+                Count = x.Count,
+                IsApproved = x.Order.IsApproved,
+                IsPaid = x.Order.IsPaid,
+                StartDate = x.StartDate,
+                EndDate = x.EndDate,
+                Abona_Approved = x.Order.Abona_approved,
+                Payment = x.Order.Payment
+
+            }).ToList();
+        }
+
+        public async Task<string> UpdateOrder(OrderUpdateDto dto)
+        {
+          Orders o = await _ordersRepo.GetOrder(dto.orderId);
+
+            if (o == null) {
+                return "Not Found";
+            }
+            o.IsApproved = dto.IsApproved;
+            o.IsPaid = dto.IsPaid;
+            await _ordersRepo.UpdateOrder(o);
+
+            return "Successfully updateds";
+
+            
+        }
     }
 }
 
