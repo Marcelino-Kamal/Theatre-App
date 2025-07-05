@@ -33,7 +33,7 @@ export default function Checkout() {
       alert(response.message);
 
       clearCart(); 
-      navigate("/dashboard");
+      navigate("/myorders");
     } catch (err) {
       alert(err.message);
     }

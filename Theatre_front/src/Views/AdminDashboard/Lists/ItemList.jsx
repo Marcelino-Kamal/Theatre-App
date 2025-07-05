@@ -4,7 +4,7 @@ import { fetchitems } from "../../../API/items";
 import $ from "jquery";
 import "datatables.net";
 
-export default function ProductTable() {
+export default function ItemTable() {
   const tableRef = useRef();
   const navigate = useNavigate();
   const [items, setItems] = useState([]);

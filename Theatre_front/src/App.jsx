@@ -17,6 +17,7 @@ import ItemList from "./Views/AdminDashboard/Lists/ItemList";
 import OrderList from "./Views/AdminDashboard/Lists/OrderList"
 import UserList from "./Views/AdminDashboard/Lists/UserList";
 import AddItem from "./Views/AdminDashboard/AddingForms/AddItem";
+import MyOrders from "./Views/UserDashboard/MyOrders";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           >
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/iteminfo/:id" element={<ItemPage />} />
+            <Route path="/myorders" element={<MyOrders/>}/>
             <Route path="/profile" element={<Profile />} />
             <Route path="/checkout" element={<Checkout />} />
           </Route>

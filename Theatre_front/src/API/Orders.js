@@ -31,3 +31,30 @@ export const addOrder = async (orderData) => {
   }
 };
 
+export const GetMyOrder = async () =>{
+
+  try{
+    const response = await api.get("/order/myorder");
+    return response.data;
+  }catch(error){
+     if (error.response?.status === 400 && error.response.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Failed to add order from the server.");
+  }
+
+};
+
+export const updateOrderStatus = async (orderData) => {
+  try{
+    const response = await api.put("/order/updateorder",orderData);
+    return response.data;
+  }catch(error){
+     if (error.response?.status === 400 && error.response.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Failed to add order from the server.");
+  }
+};

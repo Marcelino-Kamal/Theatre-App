@@ -3,7 +3,7 @@ import { getAllUsers } from "../../../API/user";
 import $ from "jquery";
 import "datatables.net";
 
-export default function ProductTable() {
+export default function UserTable() {
   const tableRef = useRef();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
