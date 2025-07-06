@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchitems } from "../../API/items";
-import ICards from "../../components/ICards";
+import AdminCards from "../../components/Cards/AdminCard";
 
 export default function AdminDash() {
   const [items, setItems] = useState([]);
@@ -35,7 +35,7 @@ export default function AdminDash() {
         ) : (
           <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4">
             {items.map((item) => (
-              <ICards key={item.id} data={item} />
+              <AdminCards key={item.id} data={item} />
             ))}
           </div>
         )}

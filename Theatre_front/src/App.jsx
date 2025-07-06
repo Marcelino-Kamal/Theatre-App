@@ -18,6 +18,7 @@ import OrderList from "./Views/AdminDashboard/Lists/OrderList"
 import UserList from "./Views/AdminDashboard/Lists/UserList";
 import AddItem from "./Views/AdminDashboard/AddingForms/AddItem";
 import MyOrders from "./Views/UserDashboard/MyOrders";
+import AdminItemPage from "./Views/AdminDashboard/AdminItemPage";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="/orderlist" element={<OrderList />} />
             <Route path="/userlist" element={<UserList />} />
             <Route path="/additem" element={<AddItem/>}/>
+            <Route path="/adminItem/:id" element={<AdminItemPage/>}></Route>
           </Route>
           <Route
             element={
