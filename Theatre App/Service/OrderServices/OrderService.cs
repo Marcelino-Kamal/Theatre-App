@@ -24,6 +24,11 @@ namespace Theatre_App.Service.OrderServices
                 {
                     return "StartDate must be earlier than EndDate.";
                 }
+                var difference = (cartItem.EndDate - cartItem.StartDate).TotalDays;
+                if (difference > 7)
+                {
+                    return "Can't rent items more than 7 days";
+                }
                 var item = await _itemsRepo.GetItemById(cartItem.ItemId);
                 if (item == null)
                 {
@@ -124,6 +129,7 @@ namespace Theatre_App.Service.OrderServices
             }
             o.IsApproved = dto.IsApproved;
             o.IsPaid = dto.IsPaid;
+           
             await _ordersRepo.UpdateOrder(o);
 
             return "Successfully updateds";
