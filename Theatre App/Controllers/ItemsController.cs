@@ -7,14 +7,9 @@ namespace Theatre_App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ItemsController : Controller
+    public class ItemsController(IItemService itemService) : Controller
     {
-        private readonly IItemService _itemService;
-
-        public ItemsController(IItemService itemService)
-        {
-            _itemService = itemService;
-        }
+        private readonly IItemService _itemService = itemService;
 
         [HttpGet("listItems")]
         public async Task<IActionResult> Getitems() { 
@@ -44,6 +39,17 @@ namespace Theatre_App.Controllers
 
             }
             return Ok(item);
+        }
+
+        [HttpDelete("removeitem")]
+        public async Task<IActionResult> Deleteitem(DeleteItemDto dto) {
+        
+            var res = await _itemService.RemoveItem(dto.Id);
+            if(res != "Successfully Deleted!")
+            {
+                return BadRequest(new {message = res});
+            }
+            return Ok(res);
         }
     }
 }

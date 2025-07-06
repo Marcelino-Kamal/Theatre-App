@@ -114,12 +114,9 @@ namespace Theatre_App.Service.ItemServices
             {
                 return "Item doesn't exists!!";
             }
-            var response = _itemsRepo.DeleteItem(item);
-            if (response == null)
-            {
-                return "Error!! Something went Wrong";
-            }
-            return " Successfully Deleted!";
+            await _itemsRepo.DeleteItem(item);
+          
+            return "Successfully Deleted!";
         }
 
         public Task<string> UpdateItem(ItemAddDto dto)
