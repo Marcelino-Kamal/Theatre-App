@@ -53,14 +53,13 @@ export default function MyOrders() {
             <thead className="bg-gray-100">
               <tr>
                 <th className="border px-4 py-2">Order Id</th>
-                <th className="border px-4 py-2">User Name</th>
                 <th className="border px-4 py-2">Item Name</th>
                 <th className="border px-4 py-2">Quantity</th>
                 <th className="border px-4 py-2">Is Approved</th>
                 <th className="border px-4 py-2">is Paid</th>
                 <th className="border px-4 py-2">Start Date</th>
                 <th className="border px-4 py-2">End Date</th>
-                <th className="border px-4 py-2">Abona approved image</th>
+                <th className="border px-4 py-2">Father approved image</th>
                 <th className="border px-4 py-2">payment image</th>
               </tr>
             </thead>
@@ -71,7 +70,6 @@ export default function MyOrders() {
                   className="hover:bg-gray-50 transition"
                 >
                   <td className="border px-4 py-2">{order.orderId}</td>
-                  <td className="border px-4 py-2">{order.userName}</td>
                   <td className="border px-4 py-2">{order.itemName}</td>
                   <td className="border px-4 py-2">{order.count}</td>
                   <td className="border px-4 py-2 text-center">
