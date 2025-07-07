@@ -42,5 +42,10 @@ namespace Theatre_App.Repository.UserRepo
         {
             return await _context.Users.Include(x => x.Role).FirstOrDefaultAsync(z => z.Id == id);
         }
+
+        public async Task<bool> PhoneNumberInUse(string phoneNumber, Guid id)
+        {
+            return await _context.Users.AnyAsync(x=>x.PhoneNumber == phoneNumber && x.Id != id);
+        }
     }
 }

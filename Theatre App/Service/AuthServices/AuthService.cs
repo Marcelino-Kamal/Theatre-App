@@ -1,23 +1,36 @@
-﻿using Theatre_App.DTO.UserDtos;
+﻿
+using Theatre_App.DTO.UserDtos;
 using Theatre_App.Helpers;
 using Theatre_App.Models;
 using Theatre_App.Repository.UserRepo;
 
 namespace Theatre_App.Service.AuthServices
 {
-    public class AuthService(IUserRepo userRepo, JwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor) : IAuthService
+    public class AuthService(IUserRepo userRepo, JwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment webHostEnvironment) : IAuthService
     {
         private readonly IUserRepo _userRepo = userRepo;
         private readonly JwtHelper _jwtHelper = jwtHelper;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly IWebHostEnvironment _webHostEnvironment = webHostEnvironment;
 
-        public async Task<String> Register(UserSignUpDto userdto) {
 
+        public async Task<String> Register(UserSignUpDto userdto, IFormFile file) {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            if (file == null)  return "National ID is missing";
+
+            string filename = userdto.Name + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            string ItemsPath = Path.Combine(wwwRootPath, @"assets\NationalId");
+            using (var fileStream = new FileStream(Path.Combine(ItemsPath, filename), FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+            var ImgUrl = @"\assets\NationalId\" + filename;
             string FName = userdto.Name.Trim();
             string Phone = userdto.PhoneNumber.Trim();
 
             var exists = await _userRepo.GetByPhoneNumber(Phone);
-            if (exists != null) 
+            if (exists != null)
                 return "Phone Number exists";
             if (string.IsNullOrWhiteSpace(FName))
                 return "Name cannot be empty or whitespace";
@@ -28,10 +41,13 @@ namespace Theatre_App.Service.AuthServices
                 Id = Guid.NewGuid(),
                 Name = FName,
                 PhoneNumber = Phone,
-                Password = hashed
+                Password = hashed,
+                NationalId = ImgUrl
+
             };
             await _userRepo.AddUser(user);
             return "Succefully added!!";
+
         }
 
         public async Task<string> Login(UserLoginDto userdto)
@@ -40,6 +56,10 @@ namespace Theatre_App.Service.AuthServices
             if (user == null)
             {
                 return "User Not Found!!";
+            }
+            if(user.isActive == false)
+            {
+                return "Account isn't Activated contact Admin";
             }
 
             var result = PasswordHelper.VerifyPassword(user.Password, userdto.Password);
@@ -64,7 +84,6 @@ namespace Theatre_App.Service.AuthServices
             }
             catch (Exception ex)
             {
-                // Log to console for now
                 Console.WriteLine("JWT Error: " + ex.Message);
                 return "JWT generation failed: " + ex.Message;
             }

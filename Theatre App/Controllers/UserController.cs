@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Theatre_App.DTO.UserDtos;
 using Theatre_App.Service.UserServices;
 
 namespace Theatre_App.Controllers
@@ -32,6 +33,7 @@ namespace Theatre_App.Controllers
 
             return Ok(user);
         }
+
         [Authorize(Roles = "admin")]
         [HttpGet("getusers")]
         public async Task<IActionResult> GetAllUsers() {
@@ -43,5 +45,28 @@ namespace Theatre_App.Controllers
             return Ok(result);
            
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("approve")]
+        public IActionResult ApproveUser(UserStatusDto userStatus) {
+
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPut("updateuser")]
+        public async Task<IActionResult> EditUser(UserUpdateDto dto) {
+
+            var res = await _userService.UpdateUser(dto);
+
+            if(res != "Successfully Updated!")
+            {
+                return BadRequest(new { message = res });
+            }
+            return Ok(new { message = res });
+        
+        }
+
     }
 }

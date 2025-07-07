@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using System.Threading.Tasks;
-using Theatre_App.DTO.ItemDtos;
+﻿using Theatre_App.DTO.ItemDtos;
 using Theatre_App.Models;
 using Theatre_App.Repository.ItemsRepo;
 

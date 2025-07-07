@@ -26,8 +26,11 @@ namespace Theatre_App.Models
         [ForeignKey("RoleID")]
         public Roles Role { get; set; }
 
-        
+        [Required]
+        public string NationalId { get; set; }
 
+  
+        public bool isActive { get; set; } = false;
 
 
     }

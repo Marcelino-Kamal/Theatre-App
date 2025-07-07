@@ -8,15 +8,17 @@ namespace Theatre_App.Service.UserServices
     {
         private readonly  IUserRepo _userRepo = userRepo;
 
-        public async Task<List<UserResponeDto>> GetAllUsers()
+        public async Task<List<UserAdminResponseDto>> GetAllUsers()
         {
             List<Users> users = await _userRepo.GetUsers();
 
-            return users.Select(x=> new UserResponeDto {
+            return users.Select(x=> new UserAdminResponseDto
+            {
                 Id = x.Id,
                 Name = x.Name,
                 PhoneNumber = x.PhoneNumber,
-                Role = x.Role.Name
+                Role = x.Role.Name,
+                NationalId = x.NationalId,
             }).ToList();
 
         }
@@ -38,9 +40,26 @@ namespace Theatre_App.Service.UserServices
 
         }
 
-        public Task<string> UpdateUser(UserUpdateDto dto)
+        public async Task<string> UpdateUser(UserUpdateDto dto)
         {
-            throw new NotImplementedException();
+           
+            Users u = await _userRepo.GetById(dto.Id);
+            if (u == null) {
+
+                return "User Not Found";
+            }
+            bool inUse = await _userRepo.PhoneNumberInUse(dto.PhoneNumber, dto.Id);
+            if(inUse) {
+                return " Phone number is already in user";
+            }
+            u.Name = dto.Name;
+            u.PhoneNumber = dto.PhoneNumber;
+
+            await _userRepo.UpdateUser(u);
+
+            return "Successfully Updated!";
+
+
         }
     }
 }

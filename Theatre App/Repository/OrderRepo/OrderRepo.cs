@@ -20,7 +20,7 @@ namespace Theatre_App.Repository.OrderRepo
             throw new NotImplementedException();
         }
 
-        public async Task<Orders?> GetOrder(Guid orderId)
+        public async Task<Orders> GetOrder(Guid orderId)
         {
             return await _context.Orders.Include(x => x.Users).FirstOrDefaultAsync(z=>z.Id==orderId);
         }

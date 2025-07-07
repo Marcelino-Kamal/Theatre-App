@@ -4,7 +4,7 @@ namespace Theatre_App.Service.AuthServices
 {
     public interface IAuthService
     {
-        Task<String> Register(UserSignUpDto userdto);
+        Task<String> Register(UserSignUpDto userdto , IFormFile file);
         Task<String> Login(UserLoginDto userdto);
         void Logout();
     }

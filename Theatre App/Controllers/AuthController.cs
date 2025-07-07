@@ -17,10 +17,10 @@ namespace Theatre_App.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromBody] UserSignUpDto dto) 
+        public async Task<IActionResult> SignUp([FromForm] UserSignUpDto dto) 
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var result = await _authService.Register(dto);
+            var result = await _authService.Register(dto,dto.NationalId);
             if (result == "Phone Number exists" || result == "Name cannot be empty or whitespace")
                 return BadRequest(new { message = result });
 

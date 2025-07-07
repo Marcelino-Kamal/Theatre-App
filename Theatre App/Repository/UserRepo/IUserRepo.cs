@@ -11,6 +11,7 @@ namespace Theatre_App.Repository.UserRepo
         Task AddUser(Users user);
         Task<Users> GetByPhoneNumber(string phoneNumber);
         Task<Users> GetById(Guid id);
+        Task<bool> PhoneNumberInUse(string phoneNumber,Guid id);
         
 
     }

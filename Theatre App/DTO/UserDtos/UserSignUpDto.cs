@@ -19,5 +19,8 @@ namespace Theatre_App.DTO.UserDtos
         [Required]
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string Confirm {  get; set; }
+
+        [Required]
+        public IFormFile NationalId { get; set; }
     }
 }
