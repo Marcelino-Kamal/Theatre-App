@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
-import { signUpUser } from "../../API/Auth"; 
+import { signUpUser } from "../../API/Auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -10,13 +10,16 @@ export default function Register() {
     PhoneNumber: "",
     Password: "",
     Confirm: "",
+    NationalId:null
+
   });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+  const { name, value, type, checked, files } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
     }));
   };
 
@@ -31,9 +34,8 @@ export default function Register() {
     try {
       const res = await signUpUser(formData);
       navigate("/login");
-      alert(res.message); 
+      alert(res.message);
     } catch (err) {
-      
       alert(err);
     }
   };
@@ -80,6 +82,17 @@ export default function Register() {
             onChange={handleChange}
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
           />
+          <div className="md:col-span-2 w-full flex flex-col justify-center items-center">
+            <label className="block mb-1 font-medium ">National Id </label>
+            <input
+              type="file"
+              name="NationalId"
+              onChange={handleChange}
+              accept="image/*"
+              className="w-full border border-gray-300 rounded-xl p-2"
+              required
+            />
+          </div>
 
           <button
             type="submit"

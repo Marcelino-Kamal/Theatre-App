@@ -7,13 +7,10 @@ export const signUpUser = async (formData) => {
   form.append("PhoneNumber", formData.PhoneNumber);
   form.append("Password", formData.Password);
   form.append("Confirm", formData.Confirm);
+  form.append("NationalId",formData.NationalId);
 
   try {
-    const response = await api.post("/Auth/signup", form, {
-      headers: {
-        "Content-Type": "application/json", 
-      },
-    });
+    const response = await api.post("/Auth/signup", form);
 
     return response.data; // { message: "Successfully added" }
   } catch (error) {
