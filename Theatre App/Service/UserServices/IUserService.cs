@@ -7,5 +7,6 @@ namespace Theatre_App.Service.UserServices
         Task<UserResponeDto> GetUserById(Guid id);
         Task<string> UpdateUser(UserUpdateDto dto);
         Task<List<UserAdminResponseDto>> GetAllUsers();
+        Task<string> ApproveUser(UserStatusDto dto);
     }
 }

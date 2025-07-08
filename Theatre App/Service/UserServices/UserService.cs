@@ -8,6 +8,21 @@ namespace Theatre_App.Service.UserServices
     {
         private readonly  IUserRepo _userRepo = userRepo;
 
+        public async Task<string> ApproveUser(UserStatusDto dto)
+        {
+            Users u = await _userRepo.GetById(dto.Id);
+            if (u == null) {
+
+                return "User Not Found";
+            
+            }
+            u.isActive = dto.IsActive;
+
+            await _userRepo.UpdateUser(u);
+            return "Successfully Approved";
+           
+        }
+
         public async Task<List<UserAdminResponseDto>> GetAllUsers()
         {
             List<Users> users = await _userRepo.GetUsers();
@@ -19,6 +34,7 @@ namespace Theatre_App.Service.UserServices
                 PhoneNumber = x.PhoneNumber,
                 Role = x.Role.Name,
                 NationalId = x.NationalId,
+                isApproved = x.isActive,
             }).ToList();
 
         }
@@ -61,5 +77,7 @@ namespace Theatre_App.Service.UserServices
 
 
         }
+
+
     }
 }

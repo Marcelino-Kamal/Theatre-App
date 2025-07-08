@@ -48,10 +48,15 @@ namespace Theatre_App.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut("approve")]
-        public IActionResult ApproveUser(UserStatusDto userStatus) {
+        public async Task<IActionResult> ApproveUser(UserStatusDto userStatus) {
 
+            var res = await _userService.ApproveUser(userStatus);
+            if (res != "Successfully Approved")
+            {
+                return BadRequest(new { message = res });
+            }
 
-            return Ok();
+            return Ok(new { message = res });
         }
 
         [Authorize]
